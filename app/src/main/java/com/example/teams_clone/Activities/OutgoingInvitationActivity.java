@@ -40,7 +40,8 @@ public class OutgoingInvitationActivity extends AppCompatActivity {
 
     private PreferenceManager preferenceManager;
     private String inviterToken = null;
-    String meetingRoom = null;
+    private String meetingRoom = null;
+    private String meetingType = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +51,7 @@ public class OutgoingInvitationActivity extends AppCompatActivity {
         preferenceManager = new PreferenceManager(getApplicationContext());
 
         ImageView imageMeetingType = findViewById(R.id.imageMeetingType);
-        String meetingType = getIntent().getStringExtra("type");
+        meetingType = getIntent().getStringExtra("type");
 
         if(meetingType != null) {
             if(meetingType.equals("video")) {
@@ -184,13 +185,17 @@ public class OutgoingInvitationActivity extends AppCompatActivity {
                 if(type.equals(Constants.REMOTE_MSG_INVITATION_ACCEPTED)) {
                     try {
                         URL serverURL = new URL("https://meet.jit.si");
-                        JitsiMeetConferenceOptions conferenceOptions =
-                                new JitsiMeetConferenceOptions.Builder()
-                                        .setServerURL(serverURL)
-                                        .setWelcomePageEnabled(false)
-                                        .setRoom(meetingRoom)
-                                        .build();
-                        JitsiMeetActivity.launch(OutgoingInvitationActivity.this, conferenceOptions);
+
+                        JitsiMeetConferenceOptions.Builder builder = new JitsiMeetConferenceOptions.Builder();
+                        builder.setServerURL(serverURL);
+                        builder.setWelcomePageEnabled(false);
+                        builder.setRoom(meetingRoom);
+                        if(meetingType.equals("audio")) {
+                            builder.setVideoMuted(true);
+                        }
+
+                        JitsiMeetActivity.launch(OutgoingInvitationActivity.this, builder.build());
+                        finish();
                     } catch(Exception exception) {
                         Toast.makeText(context, exception.getMessage(), Toast.LENGTH_SHORT).show();
                         finish();
