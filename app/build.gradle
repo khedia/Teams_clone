@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.teams_clone"
-        minSdkVersion 16
+        minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -27,6 +27,7 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
 }
 
 dependencies {
@@ -58,4 +59,11 @@ dependencies {
     //Firebase
     implementation 'com.google.firebase:firebase-messaging:22.0.0'
     implementation 'com.google.firebase:firebase-firestore:23.0.1'
+
+    //Jitsi Meet
+    implementation ('org.jitsi.react:jitsi-meet-sdk:2.8.2') { transitive = true }
+
+    //Multidex
+    //implementation "androidx.multidex:multidex:2.0.1"
+    //implementation 'com.android.support:multidex:1.0.3'
 }

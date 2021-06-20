@@ -27,6 +27,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.messaging.FirebaseMessaging;
+import org.jitsi.meet.sdk.JitsiMeetActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
