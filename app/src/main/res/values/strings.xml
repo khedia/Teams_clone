@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">Teams_clone</string>
+    <string name="microsoft">Microsoft</string>
+    <string name="teams">Teams</string>
+    <string name="sign_in_to_your_account">Sign In To Your Account</string>
+    <string name="email">Email</string>
+    <string name="you_example_com">you@example.com</string>
+    <string name="password">Password</string>
+    <string name="password_hint">• • • • • •</string>
+    <string name="sign_in">Sign In</string>
+    <string name="don_t_have_an_account">Don\'t Have An Account?</string>
+    <string name="don_t_have_an_account_">Don\'t Have an Account?</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="enter_the_details_below_to_create_a_new_account">Enter the details below to create a new account</string>
+    <string name="first_name">First Name</string>
+    <string name="john">John</string>
+    <string name="last_name">Last Name</string>
+    <string name="jackson">Jackson</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="already_have_an_account">Already Have an Account</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="incoming_meeting_invitation">Incoming Meeting Invitation</string>
+    <string name="sending_meeting_invitation">Sending Meeting Invitation</string>
+</resources>
