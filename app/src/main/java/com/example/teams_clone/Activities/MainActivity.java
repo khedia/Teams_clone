@@ -1,13 +1,21 @@
 package com.example.teams_clone.Activities;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.PowerManager;
+import android.provider.Settings;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +35,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.gson.Gson;
+
 import org.jitsi.meet.sdk.JitsiMeetActivity;
 
 import java.util.ArrayList;
@@ -40,6 +50,9 @@ public class MainActivity extends AppCompatActivity implements UsersListeners {
     private UsersAdapter usersAdapter;
     private TextView textErrorMessage;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private ImageView imageConference;
+
+    private int REQUEST_CODE_BATTERY_OPTIMIZATIONS = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +60,8 @@ public class MainActivity extends AppCompatActivity implements UsersListeners {
         setContentView(R.layout.activity_main);
 
         preferenceManager = new PreferenceManager(getApplicationContext());
+
+        imageConference = findViewById(R.id.imageConference);
 
         TextView textTitle = findViewById(R.id.texTitle);
         textTitle.setText(String.format(
@@ -82,6 +97,7 @@ public class MainActivity extends AppCompatActivity implements UsersListeners {
         swipeRefreshLayout.setOnRefreshListener(this::getUsers);
 
         getUsers();
+        checkForBatteryOptimizations();
     }
 
     private void sendFCMTokenToDatabase(String token) {
@@ -192,6 +208,57 @@ public class MainActivity extends AppCompatActivity implements UsersListeners {
             intent.putExtra("user", user);
             intent.putExtra("type", "audio");
             startActivity(intent);
+        }
+    }
+
+    @Override
+    public void onMultipleUsersAction(Boolean isMultipleUsersSelected) {
+        if(isMultipleUsersSelected) {
+            imageConference.setVisibility(View.VISIBLE);
+            imageConference.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getApplicationContext(), OutgoingInvitationActivity.class);
+                    intent.putExtra("selectedUsers", new Gson().toJson(usersAdapter.getSelectedUsers()));
+                    intent.putExtra("type", "video");
+                    intent.putExtra("isMultiple", true);
+                    startActivity(intent);
+                }
+            });
+        } else {
+            imageConference.setVisibility(View.GONE);
+        }
+    }
+
+    private void checkForBatteryOptimizations() {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            PowerManager powerManager = (PowerManager) getSystemService(POWER_SERVICE);
+            if(!powerManager.isIgnoringBatteryOptimizations(getPackageName())) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setTitle("Warning");
+                builder.setMessage("Battery Optimization is enabled. It can interrupt running background services.");
+                builder.setPositiveButton("Disable", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS);
+                        startActivityForResult(intent, REQUEST_CODE_BATTERY_OPTIMIZATIONS);
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+            }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == REQUEST_CODE_BATTERY_OPTIMIZATIONS) {
+            checkForBatteryOptimizations();
         }
     }
 }

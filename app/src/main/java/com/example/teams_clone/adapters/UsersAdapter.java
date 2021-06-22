@@ -7,24 +7,30 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.teams_clone.Listeners.UsersListeners;
-import com.example.teams_clone.Listeners.UsersListeners;
 import com.example.teams_clone.R;
 import com.example.teams_clone.models.Users;
-import com.google.firebase.firestore.auth.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHolder> {
 
     private List<Users> users;
     private UsersListeners usersListeners;
+    private List<Users> selectedUsers;
 
     public UsersAdapter(List<Users> users, UsersListeners usersListeners) {
         this.users = users;
         this.usersListeners = usersListeners;
+        selectedUsers = new ArrayList<>();
+    }
+
+    public List<Users> getSelectedUsers() {
+        return selectedUsers;
     }
 
     @NonNull
@@ -53,6 +59,8 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
 
         TextView textFirstChar, textUsername, textEmail;
         ImageView imageAudioMeeting, imageVideoMeeting;
+        ConstraintLayout userContainer;
+        ImageView imageSelected;
 
         UserViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -61,6 +69,8 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
             textEmail = itemView.findViewById(R.id.textEmail);
             imageAudioMeeting = itemView.findViewById(R.id.imageAudioMeeting);
             imageVideoMeeting = itemView.findViewById(R.id.imageVideoMeeting);
+            userContainer = itemView.findViewById(R.id.userContainer);
+            imageSelected = itemView.findViewById(R.id.imageSelected);
         }
 
         void sendUserData(Users user) {
@@ -77,6 +87,40 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
                 @Override
                 public void onClick(View v) {
                     usersListeners.initiateVideoMeeting(user);
+                }
+            });
+
+            userContainer.setOnLongClickListener(v -> {
+
+                if(imageSelected.getVisibility() != View.VISIBLE) {
+                    selectedUsers.add(user);
+                    imageSelected.setVisibility(View.VISIBLE);
+                    imageVideoMeeting.setVisibility(View.GONE);
+                    imageAudioMeeting.setVisibility(View.GONE);
+                    usersListeners.onMultipleUsersAction(true);
+                }
+                return true;
+            });
+
+            userContainer.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(imageSelected.getVisibility() ==  View.VISIBLE) {
+                        selectedUsers.remove(user);
+                        imageSelected.setVisibility(View.GONE);
+                        imageVideoMeeting.setVisibility(View.VISIBLE);
+                        imageAudioMeeting.setVisibility(View.VISIBLE);
+                        if (selectedUsers.size() == 0) {
+                            usersListeners.onMultipleUsersAction(false);
+                        }
+                    } else {
+                        if(selectedUsers.size() > 0) {
+                                selectedUsers.add(user);
+                                imageSelected.setVisibility(View.VISIBLE);
+                                imageVideoMeeting.setVisibility(View.GONE);
+                                imageAudioMeeting.setVisibility(View.GONE);
+                        }
+                    }
                 }
             });
         }
