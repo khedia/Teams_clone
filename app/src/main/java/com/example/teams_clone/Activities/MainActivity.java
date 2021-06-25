@@ -1,13 +1,5 @@
 package com.example.teams_clone.Activities;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
@@ -19,12 +11,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.example.teams_clone.Listeners.UsersListeners;
 import com.example.teams_clone.R;
 import com.example.teams_clone.adapters.UsersAdapter;
 import com.example.teams_clone.models.Users;
 import com.example.teams_clone.utilities.Constants;
 import com.example.teams_clone.utilities.PreferenceManager;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -36,8 +36,6 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
-
-import org.jitsi.meet.sdk.JitsiMeetActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -51,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements UsersListeners {
     private TextView textErrorMessage;
     private SwipeRefreshLayout swipeRefreshLayout;
     private ImageView imageConference;
+    private GoogleSignInClient mGoogleSignInClient;
 
     private int REQUEST_CODE_BATTERY_OPTIMIZATIONS = 1;
 
@@ -154,6 +153,7 @@ public class MainActivity extends AppCompatActivity implements UsersListeners {
     }
 
     private void signOut() {
+        //mGoogleSignInClient.signOut();
         Toast.makeText(this, "Signing Out...", Toast.LENGTH_SHORT).show();
         FirebaseFirestore database = FirebaseFirestore.getInstance();
         DocumentReference documentReference =
