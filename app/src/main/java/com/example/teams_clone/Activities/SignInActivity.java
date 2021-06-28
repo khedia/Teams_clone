@@ -187,4 +187,9 @@ public class SignInActivity extends AppCompatActivity {
             Toast.makeText(SignInActivity.this, "Unable to Sign In", Toast.LENGTH_SHORT).show();
         }
     }
+
+    private void sendDataToDatabase()
+    {
+
+    }
 }

@@ -29,6 +29,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -36,6 +37,8 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
+
+import org.opencv.android.OpenCVLoader;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -58,6 +61,8 @@ public class MainActivity extends AppCompatActivity implements UsersListeners {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        isSuccessful();
+
         preferenceManager = new PreferenceManager(getApplicationContext());
 
         imageConference = findViewById(R.id.imageConference);
@@ -72,7 +77,10 @@ public class MainActivity extends AppCompatActivity implements UsersListeners {
         findViewById(R.id.textSignOut).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
                 signOut();
+                startActivity(new Intent(getApplicationContext(), SignInActivity.class));
+                finish();
             }
         });
 
@@ -97,6 +105,16 @@ public class MainActivity extends AppCompatActivity implements UsersListeners {
 
         getUsers();
         checkForBatteryOptimizations();
+    }
+
+    private void isSuccessful()
+    {
+        if(OpenCVLoader.initDebug()){
+            Toast.makeText(MainActivity.this, "Successful", Toast.LENGTH_SHORT).show();
+
+        } else{
+            Toast.makeText(MainActivity.this, "Unsuccessful", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void sendFCMTokenToDatabase(String token) {
