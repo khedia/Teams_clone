@@ -13,6 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.teams_clone.R;
+import com.example.teams_clone.managers.AuthenticationManager;
 import com.example.teams_clone.utilities.Constants;
 import com.example.teams_clone.utilities.PreferenceManager;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -31,7 +32,11 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.HashMap;
+
+import static co.apptailor.googlesignin.RNGoogleSigninModule.RC_SIGN_IN;
 
 public class SignInActivity extends AppCompatActivity {
 
@@ -40,7 +45,7 @@ public class SignInActivity extends AppCompatActivity {
     private ProgressBar signInProgressBar;
     private PreferenceManager preferenceManager;
     private GoogleSignInClient mGoogleSignInClient;
-    private static int RC_SIGN_IN = 100;
+//    private static int RC_SIGN_IN = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +54,7 @@ public class SignInActivity extends AppCompatActivity {
 
         preferenceManager = new PreferenceManager(getApplicationContext());
 
-        if(preferenceManager.getBoolean(Constants.KEY_IS_SIGNED_IN)) {
+        if (preferenceManager.getBoolean(Constants.KEY_IS_SIGNED_IN)) {
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
             finish();
@@ -69,6 +74,7 @@ public class SignInActivity extends AppCompatActivity {
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .requestProfile()
                 .build();
@@ -80,30 +86,22 @@ public class SignInActivity extends AppCompatActivity {
         SignInButton signInButton = findViewById(R.id.sign_in_button);
         signInButton.setSize(SignInButton.SIZE_STANDARD);
 
-        signInButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                    signInG();
+        signInButton.setOnClickListener(v -> signInG());
+
+
+        buttonSignIn.setOnClickListener(v -> {
+            if (inputEmail.getText().toString().trim().isEmpty()) {
+                Toast.makeText(SignInActivity.this, "Enter email", Toast.LENGTH_SHORT).show();
+            } else if (!Patterns.EMAIL_ADDRESS.matcher(inputEmail.getText().toString()).matches()) {
+                Toast.makeText(SignInActivity.this, "Enter valid email", Toast.LENGTH_SHORT).show();
+            } else if (inputPassword.getText().toString().trim().isEmpty()) {
+                Toast.makeText(SignInActivity.this, "Enter password", Toast.LENGTH_SHORT).show();
+            } else {
+                signIn();
             }
         });
-
-
-        buttonSignIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(inputEmail.getText().toString().trim().isEmpty()) {
-                    Toast.makeText(SignInActivity.this, "Enter email", Toast.LENGTH_SHORT).show();
-                } else if(!Patterns.EMAIL_ADDRESS.matcher(inputEmail.getText().toString()).matches()) {
-                    Toast.makeText(SignInActivity.this, "Enter valid email", Toast.LENGTH_SHORT).show();
-                } else if(inputPassword.getText().toString().trim().isEmpty()) {
-                    Toast.makeText(SignInActivity.this, "Enter password", Toast.LENGTH_SHORT).show();
-                } else {
-                    signIn();
-                }
-            }
-        });
-
     }
+
 
     private void signInG() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
@@ -141,6 +139,12 @@ public class SignInActivity extends AppCompatActivity {
                     }
                 });
     }
+
+//    private void goMainScreen() {
+//        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//        startActivity(intent);
+//    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -213,7 +217,7 @@ public class SignInActivity extends AppCompatActivity {
                     buttonSignIn.setVisibility(View.VISIBLE);
                     Toast.makeText(SignInActivity.this, "Unable to Sign In", Toast.LENGTH_SHORT).show();
                 }
-                startActivity(new Intent(SignInActivity.this, MainActivity.class));
+//                startActivity(new Intent(SignInActivity.this, MainActivity.class));
             //}
         }catch(ApiException e){
                 Log.d("Unable to sign in: ", e.getMessage());

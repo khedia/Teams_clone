@@ -22,6 +22,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.example.teams_clone.Listeners.UsersListeners;
 import com.example.teams_clone.R;
 import com.example.teams_clone.adapters.UsersAdapter;
+import com.example.teams_clone.managers.AuthenticationManager;
 import com.example.teams_clone.models.Users;
 import com.example.teams_clone.utilities.Constants;
 import com.example.teams_clone.utilities.PreferenceManager;
@@ -50,7 +51,6 @@ public class MainActivity extends AppCompatActivity implements UsersListeners {
     private TextView textErrorMessage;
     private SwipeRefreshLayout swipeRefreshLayout;
     private ImageView imageConference;
-    private GoogleSignInClient mGoogleSignInClient;
 
     private int REQUEST_CODE_BATTERY_OPTIMIZATIONS = 1;
 
@@ -101,20 +101,20 @@ public class MainActivity extends AppCompatActivity implements UsersListeners {
     }
 
     private void sendFCMTokenToDatabase(String token) {
-//        FirebaseFirestore database = FirebaseFirestore.getInstance();
-//        DocumentReference documentReference =
-//                database.collection(Constants.KEY_COLLECTION_USERS).document(
-//                        preferenceManager.getString(Constants.KEY_USER_ID)
-//                );
-//        documentReference.update(Constants.KEY_FCM_TOKEN, token)
-//                .addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        Toast.makeText(
-//                                MainActivity.this, "Unable to send token: " + e.getMessage(), Toast.LENGTH_SHORT)
-//                                .show();
-//                    }
-//                });
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
+        DocumentReference documentReference =
+                database.collection(Constants.KEY_COLLECTION_USERS).document(
+                        preferenceManager.getString(Constants.KEY_USER_ID)
+                );
+        documentReference.update(Constants.KEY_FCM_TOKEN, token)
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(
+                                MainActivity.this, "Unable to send token: " + e.getMessage(), Toast.LENGTH_SHORT)
+                                .show();
+                    }
+                });
     }
 
     private void getUsers() {
@@ -156,7 +156,7 @@ public class MainActivity extends AppCompatActivity implements UsersListeners {
     }
 
     private void signOut() {
-        //mGoogleSignInClient.signOut();
+        AuthenticationManager.singOutG(this);
         Toast.makeText(this, "Signing Out...", Toast.LENGTH_SHORT).show();
         FirebaseFirestore database = FirebaseFirestore.getInstance();
         DocumentReference documentReference =
