@@ -66,4 +66,17 @@ dependencies {
     //Multidex
     //implementation "androidx.multidex:multidex:2.0.1"
     //implementation 'com.android.support:multidex:1.0.3'
+
+    //Firebase Authentication
+    implementation 'com.firebaseui:firebase-ui-auth:7.2.0'
+    //implementation 'com.facebook.android:facebook-android-sdk:8.x'
+
+    // Import the BoM for the Firebase platform
+    implementation platform('com.google.firebase:firebase-bom:28.1.0')
+
+    // Declare the dependency for the Firebase Authentication library
+    implementation 'com.google.firebase:firebase-auth'
+
+    //Google Play Services
+    implementation 'com.google.android.gms:play-services-auth:19.0.0'
 }

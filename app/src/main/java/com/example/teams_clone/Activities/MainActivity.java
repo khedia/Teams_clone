@@ -1,30 +1,32 @@
 package com.example.teams_clone.Activities;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.example.teams_clone.Listeners.UsersListeners;
 import com.example.teams_clone.R;
 import com.example.teams_clone.adapters.UsersAdapter;
+import com.example.teams_clone.managers.AuthenticationManager;
 import com.example.teams_clone.models.Users;
 import com.example.teams_clone.utilities.Constants;
 import com.example.teams_clone.utilities.PreferenceManager;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -36,8 +38,6 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
-
-import org.jitsi.meet.sdk.JitsiMeetActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -110,7 +110,9 @@ public class MainActivity extends AppCompatActivity implements UsersListeners {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(MainActivity.this, "Unable to send token: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(
+                                MainActivity.this, "Unable to send token: " + e.getMessage(), Toast.LENGTH_SHORT)
+                                .show();
                     }
                 });
     }
@@ -154,6 +156,7 @@ public class MainActivity extends AppCompatActivity implements UsersListeners {
     }
 
     private void signOut() {
+        AuthenticationManager.singOutG(this);
         Toast.makeText(this, "Signing Out...", Toast.LENGTH_SHORT).show();
         FirebaseFirestore database = FirebaseFirestore.getInstance();
         DocumentReference documentReference =
@@ -215,15 +218,12 @@ public class MainActivity extends AppCompatActivity implements UsersListeners {
     public void onMultipleUsersAction(Boolean isMultipleUsersSelected) {
         if(isMultipleUsersSelected) {
             imageConference.setVisibility(View.VISIBLE);
-            imageConference.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(getApplicationContext(), OutgoingInvitationActivity.class);
-                    intent.putExtra("selectedUsers", new Gson().toJson(usersAdapter.getSelectedUsers()));
-                    intent.putExtra("type", "video");
-                    intent.putExtra("isMultiple", true);
-                    startActivity(intent);
-                }
+            imageConference.setOnClickListener(v -> {
+                Intent intent = new Intent(getApplicationContext(), OutgoingInvitationActivity.class);
+                intent.putExtra("selectedUsers", new Gson().toJson(usersAdapter.getSelectedUsers()));
+                intent.putExtra("type", "video");
+                intent.putExtra("isMultiple", true);
+                startActivity(intent);
             });
         } else {
             imageConference.setVisibility(View.GONE);
