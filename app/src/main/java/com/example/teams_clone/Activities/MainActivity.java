@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements UsersListeners {
         setContentView(R.layout.activity_main);
 
         preferenceManager = new PreferenceManager(getApplicationContext());
+        new AuthenticationManager(this);
 
         imageConference = findViewById(R.id.imageConference);
 
