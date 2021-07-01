@@ -44,7 +44,7 @@ public class SignInActivity extends AppCompatActivity {
     private MaterialButton buttonSignIn;
     private ProgressBar signInProgressBar;
     private PreferenceManager preferenceManager;
-    private GoogleSignInClient mGoogleSignInClient;
+//    private GoogleSignInClient mGoogleSignInClient;
 //    private static int RC_SIGN_IN = 100;
 
     @Override
@@ -69,7 +69,7 @@ public class SignInActivity extends AppCompatActivity {
 
         // Check for existing Google Sign In account, if the user is already signed in
         // the GoogleSignInAccount will be non-null.
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+//        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
 
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
@@ -80,13 +80,13 @@ public class SignInActivity extends AppCompatActivity {
                 .build();
 
         // Build a GoogleSignInClient with the options specified by gso.
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+//        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
         // Set the dimensions of the sign-in button.
         SignInButton signInButton = findViewById(R.id.sign_in_button);
         signInButton.setSize(SignInButton.SIZE_STANDARD);
 
-        signInButton.setOnClickListener(v -> signInG());
+        signInButton.setOnClickListener(v -> AuthenticationManager.signInG(this));
 
 
         buttonSignIn.setOnClickListener(v -> {
@@ -103,10 +103,10 @@ public class SignInActivity extends AppCompatActivity {
     }
 
 
-    private void signInG() {
-        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent, RC_SIGN_IN);
-    }
+//    private void signInG() {
+//        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+//        startActivityForResult(signInIntent, RC_SIGN_IN);
+//    }
 
     private void signIn() {
 
@@ -164,51 +164,42 @@ public class SignInActivity extends AppCompatActivity {
                             .whereEqualTo(Constants.KEY_EMAIL, account.getEmail())
                             .whereEqualTo(Constants.KEY_FIRST_NAME, account.getGivenName())
                             .get()
-                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                    if (task.isSuccessful() && task.getResult() != null && task.getResult().getDocuments().size() > 0) {
-                                        Log.w("not", "google");
-                                        DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
-                                        preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_IN, true);
-                                        preferenceManager.putString(Constants.KEY_USER_ID, documentSnapshot.getId());
-                                        preferenceManager.putString(Constants.KEY_FIRST_NAME, account.getGivenName());
-                                        preferenceManager.putString(Constants.KEY_LAST_NAME, account.getFamilyName());
-                                        preferenceManager.putString(Constants.KEY_EMAIL, account.getEmail());
-                                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                        startActivity(intent);
-                                    } else {
-                                        Log.w("new", "google");
-                                        HashMap<String, Object> user = new HashMap<>();
-                                        user.put(Constants.KEY_FIRST_NAME, account.getGivenName());
-                                        user.put(Constants.KEY_LAST_NAME, account.getFamilyName());
-                                        user.put(Constants.KEY_EMAIL, account.getEmail());
+                            .addOnCompleteListener(task -> {
+                                if (task.isSuccessful() && task.getResult() != null && task.getResult().getDocuments().size() > 0) {
+                                    Log.w("not", "google");
+                                    DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
+                                    preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_IN, true);
+                                    preferenceManager.putString(Constants.KEY_USER_ID, documentSnapshot.getId());
+                                    preferenceManager.putString(Constants.KEY_FIRST_NAME, account.getGivenName());
+                                    preferenceManager.putString(Constants.KEY_LAST_NAME, account.getFamilyName());
+                                    preferenceManager.putString(Constants.KEY_EMAIL, account.getEmail());
+                                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    startActivity(intent);
+                                } else {
+                                    Log.w("new", "google");
+                                    HashMap<String, Object> user = new HashMap<>();
+                                    user.put(Constants.KEY_FIRST_NAME, account.getGivenName());
+                                    user.put(Constants.KEY_LAST_NAME, account.getFamilyName());
+                                    user.put(Constants.KEY_EMAIL, account.getEmail());
 
-                                        database.collection(Constants.KEY_COLLECTION_USERS)
-                                                .add(user)
-                                                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                                    @Override
-                                                    public void onSuccess(DocumentReference documentReference) {
-                                                        preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_IN, true);
-                                                        preferenceManager.putString(Constants.KEY_USER_ID, documentReference.getId());
-                                                        preferenceManager.putString(Constants.KEY_FIRST_NAME, account.getGivenName());
-                                                        preferenceManager.putString(Constants.KEY_LAST_NAME, account.getFamilyName());
-                                                        preferenceManager.putString(Constants.KEY_EMAIL, account.getEmail());
-                                                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                                        startActivity(intent);
-                                                    }
-                                                })
-                                                .addOnFailureListener(new OnFailureListener() {
-                                                    @Override
-                                                    public void onFailure(@NonNull Exception e) {
-                                                        signInProgressBar.setVisibility(View.INVISIBLE);
-                                                        buttonSignIn.setVisibility(View.VISIBLE);
-                                                        Toast.makeText(SignInActivity.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                                                    }
-                                                });
-                                    }
+                                    database.collection(Constants.KEY_COLLECTION_USERS)
+                                            .add(user)
+                                            .addOnSuccessListener(documentReference -> {
+                                                preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_IN, true);
+                                                preferenceManager.putString(Constants.KEY_USER_ID, documentReference.getId());
+                                                preferenceManager.putString(Constants.KEY_FIRST_NAME, account.getGivenName());
+                                                preferenceManager.putString(Constants.KEY_LAST_NAME, account.getFamilyName());
+                                                preferenceManager.putString(Constants.KEY_EMAIL, account.getEmail());
+                                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                                startActivity(intent);
+                                            })
+                                            .addOnFailureListener(e -> {
+                                                signInProgressBar.setVisibility(View.INVISIBLE);
+                                                buttonSignIn.setVisibility(View.VISIBLE);
+                                                Toast.makeText(SignInActivity.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                            });
                                 }
                             });
 
