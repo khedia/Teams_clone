@@ -18,21 +18,15 @@ import com.example.teams_clone.utilities.Constants;
 import com.example.teams_clone.utilities.PreferenceManager;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 
@@ -118,24 +112,21 @@ public class SignInActivity extends AppCompatActivity {
                 .whereEqualTo(Constants.KEY_EMAIL, inputEmail.getText().toString())
                 .whereEqualTo(Constants.KEY_PASSWORD, inputPassword.getText().toString())
                 .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if(task.isSuccessful() && task.getResult() != null && task.getResult().getDocuments().size() > 0) {
-                            DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
-                            preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_IN, true);
-                            preferenceManager.putString(Constants.KEY_USER_ID, documentSnapshot.getId());
-                            preferenceManager.putString(Constants.KEY_FIRST_NAME, documentSnapshot.getString(Constants.KEY_FIRST_NAME));
-                            preferenceManager.putString(Constants.KEY_LAST_NAME, documentSnapshot.getString(Constants.KEY_LAST_NAME));
-                            preferenceManager.putString(Constants.KEY_EMAIL, documentSnapshot.getString(Constants.KEY_EMAIL));
-                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            startActivity(intent);
-                        } else {
-                            signInProgressBar.setVisibility(View.INVISIBLE);
-                            buttonSignIn.setVisibility(View.VISIBLE);
-                            Toast.makeText(SignInActivity.this, "Unable to Sign In", Toast.LENGTH_SHORT).show();
-                        }
+                .addOnCompleteListener(task -> {
+                    if(task.isSuccessful() && task.getResult() != null && task.getResult().getDocuments().size() > 0) {
+                        DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
+                        preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_IN, true);
+                        preferenceManager.putString(Constants.KEY_USER_ID, documentSnapshot.getId());
+                        preferenceManager.putString(Constants.KEY_FIRST_NAME, documentSnapshot.getString(Constants.KEY_FIRST_NAME));
+                        preferenceManager.putString(Constants.KEY_LAST_NAME, documentSnapshot.getString(Constants.KEY_LAST_NAME));
+                        preferenceManager.putString(Constants.KEY_EMAIL, documentSnapshot.getString(Constants.KEY_EMAIL));
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                    } else {
+                        signInProgressBar.setVisibility(View.INVISIBLE);
+                        buttonSignIn.setVisibility(View.VISIBLE);
+                        Toast.makeText(SignInActivity.this, "Unable to Sign In", Toast.LENGTH_SHORT).show();
                     }
                 });
     }

@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -68,26 +67,16 @@ public class IncomingInvitationActivity extends AppCompatActivity {
         textEmail.setText(getIntent().getStringExtra(Constants.KEY_EMAIL));
 
         ImageView imageAcceptInvitation = findViewById(R.id.imageAcceptInvitation);
-        imageAcceptInvitation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sendInvitationResponse(
-                        Constants.REMOTE_MSG_INVITATION_ACCEPTED,
-                        getIntent().getStringExtra(Constants.REMOTE_MSG_INVITER_TOKEN)
-                );
-            }
-        });
+        imageAcceptInvitation.setOnClickListener(v -> sendInvitationResponse(
+                Constants.REMOTE_MSG_INVITATION_ACCEPTED,
+                getIntent().getStringExtra(Constants.REMOTE_MSG_INVITER_TOKEN)
+        ));
 
         ImageView imageRejectInvitation = findViewById(R.id.imageRejectInvitation);
-        imageRejectInvitation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sendInvitationResponse(
-                        Constants.REMOTE_MSG_INVITATION_REJECTED,
-                        getIntent().getStringExtra(Constants.REMOTE_MSG_INVITER_TOKEN)
-                );
-            }
-        });
+        imageRejectInvitation.setOnClickListener(v -> sendInvitationResponse(
+                Constants.REMOTE_MSG_INVITATION_REJECTED,
+                getIntent().getStringExtra(Constants.REMOTE_MSG_INVITER_TOKEN)
+        ));
     }
 
     private void sendInvitationResponse(String type, String receiverToken)

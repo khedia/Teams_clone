@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Teams_clone</string>
+    <string name="app_name">Teams</string>
     <string name="microsoft">Microsoft</string>
     <string name="teams">Teams</string>
     <string name="sign_in_to_your_account">Sign In To Your Account</string>

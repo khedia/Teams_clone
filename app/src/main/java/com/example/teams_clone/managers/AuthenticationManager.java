@@ -9,8 +9,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 
-import java.util.concurrent.Executor;
-
 import static co.apptailor.googlesignin.RNGoogleSigninModule.RC_SIGN_IN;
 
 public class AuthenticationManager {

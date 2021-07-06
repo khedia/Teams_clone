@@ -20,9 +20,6 @@ import com.example.teams_clone.network.ApiClient;
 import com.example.teams_clone.network.ApiService;
 import com.example.teams_clone.utilities.Constants;
 import com.example.teams_clone.utilities.PreferenceManager;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.auth.User;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -85,40 +82,34 @@ public class OutgoingInvitationActivity extends AppCompatActivity {
         }
 
         ImageView imageStopInvitation = findViewById(R.id.imageStopInvitation);
-        imageStopInvitation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(getIntent().getBooleanExtra("isMultiple", false)) {
-                    Type type = new TypeToken<ArrayList<Users>>() {
-                    }.getType();
-                    ArrayList<Users> receivers = new Gson().fromJson(getIntent().getStringExtra("selectedUsers"), type);
-                    cancelInvitation(null, receivers);
-                } else {
-                    if(user != null) {
-                        cancelInvitation(user.token, null);
-                    }
+        imageStopInvitation.setOnClickListener(v -> {
+            if(getIntent().getBooleanExtra("isMultiple", false)) {
+                Type type = new TypeToken<ArrayList<Users>>() {
+                }.getType();
+                ArrayList<Users> receivers = new Gson().fromJson(getIntent().getStringExtra("selectedUsers"), type);
+                cancelInvitation(null, receivers);
+            } else {
+                if(user != null) {
+                    cancelInvitation(user.token, null);
                 }
             }
         });
 
-        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
-            @Override
-            public void onComplete(@NonNull Task<String> task) {
-                if(task.isSuccessful() && task.getResult() != null) {
-                    inviterToken = task.getResult();
-                    if(meetingType != null) {
-                        if(getIntent().getBooleanExtra("isMultiple", false)) {
-                            Type type = new TypeToken<ArrayList<Users>>() {}.getType();
-                            ArrayList<Users> receivers = new Gson().fromJson(getIntent().getStringExtra("selectedUsers"), type);
-                            if(receivers != null) {
-                                totalReceivers = receivers.size();
-                            }
-                            initiateMeeting(meetingType, null, receivers);
-                        } else {
-                            if(user != null) {
-                                totalReceivers = 1;
-                                initiateMeeting(meetingType, user.token, null);
-                            }
+        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
+            if(task.isSuccessful() && task.getResult() != null) {
+                inviterToken = task.getResult();
+                if(meetingType != null) {
+                    if(getIntent().getBooleanExtra("isMultiple", false)) {
+                        Type type = new TypeToken<ArrayList<Users>>() {}.getType();
+                        ArrayList<Users> receivers = new Gson().fromJson(getIntent().getStringExtra("selectedUsers"), type);
+                        if(receivers != null) {
+                            totalReceivers = receivers.size();
+                        }
+                        initiateMeeting(meetingType, null, receivers);
+                    } else {
+                        if(user != null) {
+                            totalReceivers = 1;
+                            initiateMeeting(meetingType, user.token, null);
                         }
                     }
                 }

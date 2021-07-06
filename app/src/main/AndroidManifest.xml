@@ -14,10 +14,12 @@
         android:theme="@style/Theme.Teams_clone"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-        <activity android:name=".Activities.OutgoingInvitationActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".Activities.IncomingInvitationActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".Activities.OutgoingInvitationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activities.IncomingInvitationActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Activities.SignInActivity"
             android:screenOrientation="portrait"
