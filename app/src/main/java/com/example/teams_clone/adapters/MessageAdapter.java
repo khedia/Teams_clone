@@ -12,9 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.teams_clone.R;
 import com.example.teams_clone.models.Chat;
 import com.example.teams_clone.utilities.Constants;
+import com.example.teams_clone.utilities.MessageStatusConstant;
 import com.example.teams_clone.utilities.PreferenceManager;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import java.util.List;
 
@@ -28,11 +27,10 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     private Context mContext;
     private List<Chat> mChat;
 
-    private String fuser;
-
-    public MessageAdapter(Context mContext, List<Chat> mChat){
+    public MessageAdapter(Context mContext, List<Chat> mChat, PreferenceManager preferenceManager){
         this.mChat = mChat;
         this.mContext = mContext;
+        this.preferenceManager = preferenceManager;
     }
 
     @NonNull
@@ -40,10 +38,10 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     public MessageAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (viewType == MSG_TYPE_RIGHT) {
             View view = LayoutInflater.from(mContext).inflate(R.layout.chat_item_right, parent, false);
-            return new MessageAdapter.ViewHolder(view);
+            return new ViewHolder(view);
         } else {
             View view = LayoutInflater.from(mContext).inflate(R.layout.chat_item_left, parent, false);
-            return new MessageAdapter.ViewHolder(view);
+            return new ViewHolder(view);
         }
     }
 
@@ -56,9 +54,9 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
         if (position == mChat.size()-1){
             if (chat.isIsseen()){
-                holder.txt_seen.setText("Seen"); // todo -you can move this to enum
+                holder.txt_seen.setText(MessageStatusConstant.SEEN); // todo -you can move this to enum
             } else {
-                holder.txt_seen.setText("Delivered");
+                holder.txt_seen.setText(MessageStatusConstant.DELIVERED);
             }
         } else {
             holder.txt_seen.setVisibility(View.GONE);
@@ -71,7 +69,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         return mChat.size();
     }
 
-    public  class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder{
 
         public TextView show_message;
         public TextView txt_seen;
@@ -86,8 +84,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
     @Override
     public int getItemViewType(int position) {
-        fuser = preferenceManager.getString(Constants.KEY_USER_ID);
-        if (mChat.get(position).getSender().equals(fuser)){
+        String fUser = preferenceManager.getString(Constants.KEY_USER_ID);
+        if (mChat.get(position).getSender().equals(fUser)){
             return MSG_TYPE_RIGHT;
         } else {
             return MSG_TYPE_LEFT;

@@ -2,7 +2,6 @@ package com.example.teams_clone.Activities;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -39,7 +38,6 @@ public class MessageActivity extends AppCompatActivity {
     DatabaseReference reference;
 
     private String userid;
-    private TextView textUserName;
     private ImageButton btn_send;
     private EditText text_send;
 
@@ -69,7 +67,6 @@ public class MessageActivity extends AppCompatActivity {
 
         findViewById(R.id.imageBack).setOnClickListener(v -> onBackPressed());
 
-        textUserName = findViewById(R.id.username);
         btn_send = findViewById(R.id.btn_send);
         text_send = findViewById(R.id.text_send);
 
@@ -78,7 +75,12 @@ public class MessageActivity extends AppCompatActivity {
 
         Users user = (Users) getIntent().getSerializableExtra("user");
         if(user != null) {
-            textUserName.setText(String.format("%s %s", user.firstName, user.lastName));
+            TextView textUserName = findViewById(R.id.username);
+            textUserName.setText(String.format(
+                    "%s %s",
+                    user.firstName,
+                    user.lastName
+            ));
         }
 
         btn_send.setOnClickListener(view -> {
@@ -97,13 +99,6 @@ public class MessageActivity extends AppCompatActivity {
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Users user = dataSnapshot.getValue(Users.class);
-                if (user != null) {
-                    textUserName.setText(user.firstName);
-                } else{
-                    Log.e("TAG", "onDataChange: Null userid" );
-                }
-
                 readMessages(fUser, userid);
             }
 
@@ -184,7 +179,7 @@ public class MessageActivity extends AppCompatActivity {
                         mChat.add(chat);
                     }
 
-                    messageAdapter = new MessageAdapter(MessageActivity.this, mChat);
+                    messageAdapter = new MessageAdapter(MessageActivity.this, mChat, preferenceManager);
                     recyclerView.setAdapter(messageAdapter);
                 }
             }
