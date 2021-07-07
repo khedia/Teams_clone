@@ -1,5 +1,6 @@
 package com.example.teams_clone.adapters;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,7 +59,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
     class UserViewHolder extends RecyclerView.ViewHolder {
 
         TextView textFirstChar, textUsername, textEmail;
-        ImageView imageAudioMeeting, imageVideoMeeting;
+        ImageView imageAudioMeeting, imageVideoMeeting, imageChatMessage;
         ConstraintLayout userContainer;
         ImageView imageSelected;
 
@@ -69,6 +70,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
             textEmail = itemView.findViewById(R.id.textEmail);
             imageAudioMeeting = itemView.findViewById(R.id.imageAudioMeeting);
             imageVideoMeeting = itemView.findViewById(R.id.imageVideoMeeting);
+            imageChatMessage = itemView.findViewById(R.id.imageChatMessage);
             userContainer = itemView.findViewById(R.id.userContainer);
             imageSelected = itemView.findViewById(R.id.imageSelected);
         }
@@ -87,6 +89,12 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
                 @Override
                 public void onClick(View v) {
                     usersListeners.initiateVideoMeeting(user);
+                }
+            });
+            imageChatMessage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    usersListeners.initiateChatMessage(user);
                 }
             });
 

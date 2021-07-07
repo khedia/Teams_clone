@@ -8,5 +8,7 @@ public interface UsersListeners {
 
     void initiateAudioMeeting(Users user);
 
+    void initiateChatMessage(Users user);
+
     void onMultipleUsersAction(Boolean isMultipleUsersSelected);
 }
