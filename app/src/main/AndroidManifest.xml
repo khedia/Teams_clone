@@ -14,6 +14,7 @@
         android:theme="@style/Theme.Teams_clone"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
+        <activity android:name=".Activities.MessageActivity"></activity>
         <activity
             android:name=".Activities.OutgoingInvitationActivity"
             android:screenOrientation="portrait" />

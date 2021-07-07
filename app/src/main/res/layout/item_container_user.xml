@@ -46,8 +46,8 @@
 
     <ImageView
         android:id="@+id/imageVideoMeeting"
-        android:layout_width="@dimen/_30sdp"
-        android:layout_height="@dimen/_30sdp"
+        android:layout_width="@dimen/_25sdp"
+        android:layout_height="@dimen/_25sdp"
         android:contentDescription="@string/app_name"
         android:padding="@dimen/_2sdp"
         android:src="@drawable/ic_video"
@@ -58,8 +58,8 @@
 
     <ImageView
         android:id="@+id/imageAudioMeeting"
-        android:layout_width="@dimen/_30sdp"
-        android:layout_height="@dimen/_30sdp"
+        android:layout_width="@dimen/_25sdp"
+        android:layout_height="@dimen/_25sdp"
         android:layout_marginEnd="@dimen/_8sdp"
         android:contentDescription="@string/app_name"
         android:padding="@dimen/_2sdp"
@@ -67,6 +67,20 @@
         app:tint="@color/colorPrimary"
         app:layout_constraintBottom_toTopOf="@+id/viewDivider"
         app:layout_constraintEnd_toStartOf="@+id/imageVideoMeeting"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginRight="@dimen/_8sdp" />
+
+    <ImageView
+        android:id="@+id/imageChatMessage"
+        android:layout_width="@dimen/_25sdp"
+        android:layout_height="@dimen/_25sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        android:contentDescription="@string/app_name"
+        android:padding="@dimen/_2sdp"
+        android:src="@drawable/ic_chat"
+        app:tint="@color/colorPrimary"
+        app:layout_constraintBottom_toTopOf="@+id/viewDivider"
+        app:layout_constraintEnd_toStartOf="@+id/imageAudioMeeting"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginRight="@dimen/_8sdp" />
 

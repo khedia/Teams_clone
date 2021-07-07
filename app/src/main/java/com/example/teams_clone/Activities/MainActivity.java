@@ -93,6 +93,7 @@ public class MainActivity extends AppCompatActivity implements UsersListeners {
                 .addOnFailureListener(e -> Toast.makeText(
                         MainActivity.this, "Unable to send token: " + e.getMessage(), Toast.LENGTH_SHORT)
                         .show());
+        documentReference.update(Constants.KEY_USER_ID, preferenceManager.getString(Constants.KEY_USER_ID));
     }
 
     private void getUsers() {
@@ -115,6 +116,7 @@ public class MainActivity extends AppCompatActivity implements UsersListeners {
                             user.lastName = documentSnapshot.getString(Constants.KEY_LAST_NAME);
                             user.email = documentSnapshot.getString(Constants.KEY_EMAIL);
                             user.token = documentSnapshot.getString(Constants.KEY_FCM_TOKEN);
+                            user.id = documentSnapshot.getString(Constants.KEY_USER_ID);
                             users.add(user);
                         }
                         if(users.size() > 0){
@@ -179,6 +181,14 @@ public class MainActivity extends AppCompatActivity implements UsersListeners {
             intent.putExtra("type", "audio");
             startActivity(intent);
         }
+    }
+
+    @Override
+    public void initiateChatMessage(Users user) {
+        Intent intent = new Intent(getApplicationContext(), MessageActivity.class);
+        intent.putExtra("user", user);
+        intent.putExtra("userid", user.id);
+        startActivity(intent);
     }
 
     @Override
