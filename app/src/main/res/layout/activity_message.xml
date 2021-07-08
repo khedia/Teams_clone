@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#e6e6e6"
+    android:background="@color/colorChatBoxBackground"
     tools:context=".Activities.MessageActivity">
 
     <LinearLayout
@@ -42,6 +42,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/recycler_view"
+        android:padding="@dimen/_8sdp"
         android:layout_below="@id/bar_layout"
         android:layout_above="@id/bottom"/>
 
