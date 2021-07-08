@@ -1,6 +1,9 @@
 package com.example.teams_clone.Activities;
 
 import android.os.Bundle;
+
+import android.util.Log;
+
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -29,6 +32,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -37,6 +41,7 @@ public class MessageActivity extends AppCompatActivity {
     private PreferenceManager preferenceManager;
 
     private String fUser;
+
     private DatabaseReference reference;
 
     private String userid;
