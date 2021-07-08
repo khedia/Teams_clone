@@ -36,25 +36,25 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     @NonNull
     @Override
     public MessageAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view;
         if (viewType == MSG_TYPE_RIGHT) {
-            View view = LayoutInflater.from(mContext).inflate(R.layout.chat_item_right, parent, false);
-            return new ViewHolder(view);
+            view = LayoutInflater.from(mContext).inflate(R.layout.chat_item_right, parent, false);
         } else {
-            View view = LayoutInflater.from(mContext).inflate(R.layout.chat_item_left, parent, false);
-            return new ViewHolder(view);
+            view = LayoutInflater.from(mContext).inflate(R.layout.chat_item_left, parent, false);
         }
+        return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MessageAdapter.ViewHolder holder, int position) {
 
         Chat chat = mChat.get(position);
-
         holder.show_message.setText(chat.getMessage());
+        holder.timeOfMessage.setText(chat.getTime());
 
         if (position == mChat.size()-1){
             if (chat.isIsseen()){
-                holder.txt_seen.setText(MessageStatusConstant.SEEN); // todo -you can move this to enum
+                holder.txt_seen.setText(MessageStatusConstant.SEEN);
             } else {
                 holder.txt_seen.setText(MessageStatusConstant.DELIVERED);
             }
@@ -73,11 +73,13 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
         public TextView show_message;
         public TextView txt_seen;
+        public TextView timeOfMessage;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
             show_message = itemView.findViewById(R.id.show_message);
+            timeOfMessage = itemView.findViewById(R.id.timeOfMessage);
             txt_seen = itemView.findViewById(R.id.txt_seen);
         }
     }
@@ -85,7 +87,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     @Override
     public int getItemViewType(int position) {
         String fUser = preferenceManager.getString(Constants.KEY_USER_ID);
-        if (mChat.get(position).getSender().equals(fUser)){
+        if (mChat.get(position).getSender().equals(fUser)) {
             return MSG_TYPE_RIGHT;
         } else {
             return MSG_TYPE_LEFT;

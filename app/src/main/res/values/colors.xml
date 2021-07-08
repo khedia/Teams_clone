@@ -9,6 +9,7 @@
     <color name="colorTextIcons">#FFFFFF</color>
     <color name="colorBackground">#FAFAFA</color>
     <color name="colorHintText">#BDBDBD</color>
+    <color name="colorChatBoxBackground">#F2F2F2</color>
     <color name="colorMeetingInvitationStart">#4004BB</color>
     <color name="colorMeetingInvitationEnd">#8A1AAA</color>
     <color name="colorHoloGreenLight">#00d024</color>

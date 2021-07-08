@@ -41,12 +41,21 @@
 
     </LinearLayout>
 
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:hint="Search by name"
+        android:id="@+id/search_users"
+        app:layout_constraintTop_toBottomOf="@+id/layoutHeader"
+        app:layout_constraintStart_toStartOf="parent"/>
+
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layoutHeader" >
+        app:layout_constraintTop_toBottomOf="@+id/search_users" >
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/usersRecyclerView"
@@ -69,7 +78,7 @@
         android:textColor="@color/colorPrimaryDark"
         android:textSize="@dimen/_13sdp"
         android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@+id/layoutHeader" />
+        app:layout_constraintTop_toBottomOf="@+id/search_users" />
 
     <ImageView
         android:id="@+id/imageConference"

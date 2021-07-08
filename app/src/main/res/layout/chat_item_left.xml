@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="300dp"
-    android:padding="8dp"
+    android:layout_width="280dp"
+    android:padding="1dp"
     android:layout_height="wrap_content">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
         android:text="hello"
         android:id="@+id/show_message"
         android:textSize="18sp"
-        android:padding="8dp"
+        android:padding="10dp"
+        android:paddingEnd="@dimen/_20sdp"
+        android:paddingBottom="@dimen/_30sdp"
+        android:textColor="@color/colorPrimaryText"
         android:background="@drawable/background_left"/>
 
     <TextView
@@ -22,5 +25,17 @@
         android:visibility="gone"
         android:layout_below="@id/show_message"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/timeOfMessage"
+        android:textSize="10sp"
+        android:layout_toEndOf="@id/show_message"
+        android:layout_marginStart="-60dp"
+        android:layout_marginBottom="-6dp"
+        android:layout_alignBottom="@id/show_message"
+        android:text="20:09 AM"
+        android:padding="7dp"
+        android:textColor="#434343" />
 
 </RelativeLayout>
