@@ -1,6 +1,7 @@
 package com.example.teams_clone.Activities;
 
 import android.os.Bundle;
+
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -28,6 +29,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -36,6 +38,7 @@ public class MessageActivity extends AppCompatActivity {
     private PreferenceManager preferenceManager;
 
     private String fUser;
+
     private DatabaseReference reference;
 
     private String userid;
@@ -50,6 +53,7 @@ public class MessageActivity extends AppCompatActivity {
     RecyclerView recyclerView;
 
     ValueEventListener readMessageListener;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,12 +91,14 @@ public class MessageActivity extends AppCompatActivity {
 
     private void setClickOnSendButtonListener() {
         ImageButton btn_send = findViewById(R.id.btn_send);
+
         btn_send.setOnClickListener(view -> {
             notify = true;
             EditText text_send = findViewById(R.id.text_send);
             String msg = text_send.getText().toString();
 //            Date date = new Date();
             String currentTime = new SimpleDateFormat("hh:mm a").format(Calendar.getInstance().getTime());
+
             if (!msg.equals("")){
                 sendMessage(fUser, userid, msg, currentTime);
             } else {
@@ -110,6 +116,7 @@ public class MessageActivity extends AppCompatActivity {
             hashMap.put("isseen", true);
         }
         snapshot.getRef().updateChildren(hashMap);
+
     }
 
     private void sendMessage(String sender, String receiver, String message, String time) {
