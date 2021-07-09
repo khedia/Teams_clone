@@ -1,8 +1,5 @@
 package com.example.teams_clone.Activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +8,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.teams_clone.R;
 import com.example.teams_clone.managers.AuthenticationManager;
@@ -21,12 +20,10 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
 
@@ -38,8 +35,6 @@ public class SignInActivity extends AppCompatActivity {
     private MaterialButton buttonSignIn;
     private ProgressBar signInProgressBar;
     private PreferenceManager preferenceManager;
-//    private GoogleSignInClient mGoogleSignInClient;
-//    private static int RC_SIGN_IN = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,22 +56,12 @@ public class SignInActivity extends AppCompatActivity {
         buttonSignIn = findViewById(R.id.buttonSignIn);
         signInProgressBar = findViewById(R.id.signInProgressBar);
 
-        // Check for existing Google Sign In account, if the user is already signed in
-        // the GoogleSignInAccount will be non-null.
-//        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-
-        // Configure sign-in to request the user's ID, email address, and basic
-        // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .requestProfile()
                 .build();
 
-        // Build a GoogleSignInClient with the options specified by gso.
-//        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-
-        // Set the dimensions of the sign-in button.
         SignInButton signInButton = findViewById(R.id.sign_in_button);
         signInButton.setSize(SignInButton.SIZE_STANDARD);
 
@@ -95,12 +80,6 @@ public class SignInActivity extends AppCompatActivity {
             }
         });
     }
-
-
-//    private void signInG() {
-//        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-//        startActivityForResult(signInIntent, RC_SIGN_IN);
-//    }
 
     private void signIn() {
 
@@ -130,12 +109,6 @@ public class SignInActivity extends AppCompatActivity {
                     }
                 });
     }
-
-//    private void goMainScreen() {
-//        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//        startActivity(intent);
-//    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -199,9 +172,8 @@ public class SignInActivity extends AppCompatActivity {
                     buttonSignIn.setVisibility(View.VISIBLE);
                     Toast.makeText(SignInActivity.this, "Unable to Sign In", Toast.LENGTH_SHORT).show();
                 }
-//                startActivity(new Intent(SignInActivity.this, MainActivity.class));
-            //}
-        }catch(ApiException e){
+
+        } catch(ApiException e) {
                 Log.d("Unable to sign in: ", e.getMessage());
                 Toast.makeText(SignInActivity.this, "Unable to Sign In", Toast.LENGTH_SHORT).show();
         }

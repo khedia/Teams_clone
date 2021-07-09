@@ -28,7 +28,6 @@ public class AuthenticationManager {
 
     public static void singOutG(AppCompatActivity activity) {
         getClient(activity).signOut().addOnCompleteListener(activity, task -> {
-            // something here - TODO
         });
     }
 
