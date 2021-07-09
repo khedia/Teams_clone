@@ -33,6 +33,10 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
         return selectedUsers;
     }
 
+    public void updateUsers(List<Users> users) {
+        this.users = users;
+    }
+
     @NonNull
     @Override
     public UserViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

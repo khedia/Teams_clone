@@ -40,13 +40,11 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements UsersListeners {
 
     private PreferenceManager preferenceManager;
-    private List<Users> users;
+    private List<Users> users = new ArrayList<>();
     private UsersAdapter usersAdapter;
     private TextView textErrorMessage;
     private SwipeRefreshLayout swipeRefreshLayout;
     private ImageView imageConference;
-
-    private EditText search_users;
 
     private int REQUEST_CODE_BATTERY_OPTIMIZATIONS = 1;
 
@@ -68,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements UsersListeners {
 
         findViewById(R.id.textSignOut).setOnClickListener(v -> signOut());
 
-        search_users = findViewById(R.id.search_users);
+        EditText search_users = findViewById(R.id.search_users);
         search_users.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -92,22 +90,33 @@ public class MainActivity extends AppCompatActivity implements UsersListeners {
             }
         });
 
-        RecyclerView usersRecyclerView = findViewById(R.id.usersRecyclerView);
         textErrorMessage = findViewById(R.id.textErrorMessage);
-
-        users = new ArrayList<>();
-        usersAdapter = new UsersAdapter(users, this);
-        usersRecyclerView.setAdapter(usersAdapter);
 
         swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
         swipeRefreshLayout.setOnRefreshListener(this::getUsers);
 
+        setUserAdapter();
         getUsers();
         checkForBatteryOptimizations();
     }
 
-    private void searchUsers(String s) {
+    private void setUserAdapter() {
+        usersAdapter = new UsersAdapter(users, this);
+        RecyclerView usersRecyclerView = findViewById(R.id.usersRecyclerView);
+        usersRecyclerView.setAdapter(usersAdapter);
+    }
 
+    private void searchUsers(String search_string) {
+        List<Users> filteredUsers = new ArrayList<>();
+        for (Users user : users) {
+            String user_content = user.firstName.toLowerCase() + user.lastName.toLowerCase() + user.email.toLowerCase();
+            if(user_content.contains(search_string)) {
+                filteredUsers.add(user);
+            }
+        }
+
+        usersAdapter.updateUsers(filteredUsers);
+        usersAdapter.notifyDataSetChanged();
     }
 
     private void sendFCMTokenToDatabase(String token) {
