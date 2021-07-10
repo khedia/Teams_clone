@@ -27,7 +27,7 @@
             android:maxWidth="190dp"
             android:layout_height="wrap_content" />
 
-        <TextClock
+        <TextView
             android:id="@+id/timeOfMessage"
             android:layout_toEndOf="@+id/show_message"
             android:layout_alignBottom="@+id/show_message"
