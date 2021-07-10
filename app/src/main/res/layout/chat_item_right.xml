@@ -1,51 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:padding="1dp"
     android:layout_height="wrap_content">
-
     <RelativeLayout
-        android:layout_width="280dp"
-        android:layout_alignParentEnd="true"
+        android:layout_toLeftOf="@+id/test_arrow"
+        android:id="@+id/message_send"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true">
-
+        android:paddingLeft="15dp"
+        android:paddingBottom="7dp"
+        android:paddingTop="5dp"
+        android:paddingRight="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="-15dp"
+        android:maxWidth="200dp"
+        android:background="@drawable/background_right"
+        tools:ignore="UselessParent">
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/background_right"
-            android:text="hello"
-            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="10dp"
             android:id="@+id/show_message"
-            android:textSize="18sp"
+            android:text="demo Text"
             android:textColor="#fff"
-            android:padding="10dp"
-            android:paddingEnd="@dimen/_10sdp"
-            android:paddingBottom="@dimen/_30sdp"
-            android:layout_alignParentRight="true" />
-
-        <TextView
+            android:textSize="17sp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:maxWidth="190dp"
+            android:layout_height="wrap_content" />
+        <TextClock
             android:id="@+id/timeOfMessage"
             android:textSize="10sp"
             android:layout_toEndOf="@id/show_message"
-            android:layout_marginStart="-58dp"
-            android:layout_marginBottom="-6dp"
-            android:layout_alignBottom="@id/show_message"
-            android:text="20:09 AM"
-            android:padding="7dp"
-            android:textColor="#fff" />
-
-        <TextView
+            android:layout_alignBottom="@+id/show_message"
+            android:text="1:30 P.M."
+            android:textColor="#fff"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/txt_seen"
-            android:layout_below="@id/show_message"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/is_Read_iv"
+            android:layout_toEndOf="@+id/timeOfMessage"
+            android:layout_alignBottom="@+id/show_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
     </RelativeLayout>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txt_seen"
+        android:layout_below="@id/message_send"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="@dimen/_3sdp"
+        android:text="Delivered"/>
+
+    <ImageView
+        android:id="@+id/test_arrow"
+        android:layout_alignParentRight="true"
+        android:layout_width="20dp"
+        android:background="@null"
+        android:layout_marginTop="-2dp"
+        android:layout_marginLeft="-8dp"
+        android:layout_height="wrap_content"/>
 </RelativeLayout>

@@ -51,6 +51,9 @@
         android:padding="5dp"
         android:id="@+id/bottom"
         android:background="#fff"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:layout_marginStart="@dimen/_2sdp"
+        android:layout_marginEnd="@dimen/_2sdp"
         android:layout_alignParentBottom="true"
         android:layout_height="wrap_content">
 
