@@ -20,6 +20,12 @@
             android:orientation="vertical"
             app:layout_constraintTop_toTopOf="parent">
 
+            <ImageView
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_80sdp"
+                android:src="@mipmap/ic_launcher_foreground"
+                android:layout_marginTop="-10dp"/>
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -28,18 +34,18 @@
                 android:includeFontPadding="false"
                 android:text="@string/microsoft"
                 android:textColor="@color/colorTextIcons"
-                android:textSize="@dimen/_15sdp" />
+                android:textSize="@dimen/_15sdp"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_4sdp"
                 android:fontFamily="font/ubuntu_bold"
                 android:gravity="center"
                 android:includeFontPadding="false"
                 android:text="@string/teams"
                 android:textColor="@color/colorTextIcons"
-                android:textSize="@dimen/_50sdp" />
+                android:textSize="@dimen/_40sdp"
+                android:layout_marginBottom="@dimen/_10sdp"/>
 
         </LinearLayout>
 

@@ -67,7 +67,6 @@ public class SignInActivity extends AppCompatActivity {
 
         signInButton.setOnClickListener(v -> AuthenticationManager.signInG(this));
 
-
         buttonSignIn.setOnClickListener(v -> {
             if (inputEmail.getText().toString().trim().isEmpty()) {
                 Toast.makeText(SignInActivity.this, "Enter email", Toast.LENGTH_SHORT).show();
@@ -175,7 +174,7 @@ public class SignInActivity extends AppCompatActivity {
 
         } catch(ApiException e) {
                 Log.d("Unable to sign in: ", e.getMessage());
-                Toast.makeText(SignInActivity.this, "Unable to Sign In", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SignInActivity.this, "Unable to Sign In " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 }
