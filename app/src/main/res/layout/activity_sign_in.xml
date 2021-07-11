@@ -142,15 +142,44 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/buttonSignIn"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_40sdp"
+            android:layout_height="@dimen/_48sdp"
             android:layout_marginStart="@dimen/_20sdp"
             android:layout_marginTop="@dimen/_20sdp"
             android:layout_marginEnd="@dimen/_20sdp"
             android:includeFontPadding="false"
             android:text="@string/sign_in"
             android:textColor="@color/colorTextIcons"
-            android:textSize="@dimen/_13sdp"
+            android:textSize="@dimen/_14sdp"
             app:layout_constraintTop_toBottomOf="@id/cardSignIn" />
+
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/google_login_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/buttonSignIn"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+        <Button
+            android:id="@+id/sign_in_button"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_48sdp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/colorTextIcons"
+            android:text="@string/sign_in_with_google"
+            android:textAllCaps="false"
+            android:textSize="@dimen/_12sdp"
+            android:textColor="@color/colorPrimary"
+            android:layout_marginTop="@dimen/_8sdp"
+            app:icon="@drawable/googleg_standard_color_18"
+            app:iconGravity="textStart"
+            app:iconPadding="10dp"
+            app:iconTint="#00100D0D"
+            app:iconTintMode="src_atop"
+            app:layout_constraintTop_toBottomOf="@id/buttonSignIn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
         <ProgressBar
             android:id="@+id/signInProgressBar"
@@ -170,9 +199,9 @@
             android:gravity="center"
             android:includeFontPadding="false"
             android:text="Don't have an account?"
-            android:textColor="@color/colorPrimaryText"
+            android:textColor="@color/colorSecondaryText"
             android:textSize="@dimen/_13sdp"
-            app:layout_constraintTop_toBottomOf="@id/buttonSignIn" />
+            app:layout_constraintTop_toBottomOf="@id/sign_in_button" />
 
         <TextView
             android:id="@+id/textSignUp"
@@ -182,39 +211,14 @@
             android:gravity="center"
             android:includeFontPadding="false"
             android:padding="@dimen/_6sdp"
-            android:text="SIGN UP"
+            android:text="@string/sign_up"
             android:textAllCaps="true"
-            android:textColor="@color/colorAccent"
-            android:textSize="@dimen/_14sdp"
-            app:layout_constraintBottom_toTopOf="@+id/sign_in_button"
-            app:layout_constraintTop_toBottomOf="@id/textNoAccount" />
-
-        <com.google.android.gms.common.SignInButton
-            android:id="@+id/google_login_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textSignUp" />
-        <Button
-            android:id="@+id/sign_in_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:backgroundTint="@color/colorTextIcons"
-            android:text="@string/sign_in_with_google"
             android:textColor="@color/colorPrimary"
-            app:icon="@drawable/googleg_standard_color_18"
-            app:iconGravity="textStart"
-            app:iconPadding="10dp"
-            app:iconTint="#00100D0D"
-            app:iconTintMode="src_atop"
+            android:textSize="@dimen/_14sdp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textSignUp"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textNoAccount" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

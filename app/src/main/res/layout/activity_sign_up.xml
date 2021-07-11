@@ -22,7 +22,7 @@
             android:id="@+id/imageBack"
             android:layout_width="@dimen/_25sdp"
             android:layout_height="@dimen/_25sdp"
-            android:contentDescription="App Name"
+            android:contentDescription="@string/app_name"
             android:src="@drawable/ic_back"
             app:tint="@color/colorTextIcons" />
 
@@ -32,9 +32,8 @@
             android:layout_marginStart="@dimen/_8sdp"
             android:includeFontPadding="false"
             android:textColor="@color/colorTextIcons"
-            android:text="@string/sign_up"
-            android:textSize="@dimen/_15sdp"
-            android:layout_marginLeft="@dimen/_8sdp" />
+            android:text="@string/sign_up2"
+            android:textSize="@dimen/_15sdp" />
 
     </LinearLayout>
 
@@ -221,13 +220,13 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/buttonSignUp"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_40sdp"
+                    android:layout_height="@dimen/_48sdp"
                     android:layout_marginStart="@dimen/_20sdp"
                     android:layout_marginEnd="@dimen/_20sdp"
                     android:includeFontPadding="false"
-                    android:text="@string/sign_up"
+                    android:text="@string/sign_up2"
                     android:textColor="@color/colorTextIcons"
-                    android:textSize="@dimen/_13sdp"
+                    android:textSize="@dimen/_14sdp"
                     app:layout_constraintTop_toBottomOf="@id/cardSignIn" />
 
                 <ProgressBar
@@ -245,8 +244,8 @@
                 android:layout_marginTop="@dimen/_5sdp"
                 android:gravity="center"
                 android:includeFontPadding="false"
-                android:text="Already have an account?"
-                android:textColor="@color/colorPrimaryText"
+                android:text="@string/already_have_an_account"
+                android:textColor="@color/colorSecondaryText"
                 android:textSize="@dimen/_13sdp" />
 
             <TextView
@@ -257,9 +256,9 @@
                 android:gravity="center"
                 android:includeFontPadding="false"
                 android:padding="@dimen/_6sdp"
-                android:text="@string/sign_in"
+                android:text="@string/sign_in2"
                 android:textAllCaps="true"
-                android:textColor="@color/colorAccent"
+                android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/_14sdp"
                 app:layout_constraintBottom_toBottomOf="parent" />
 
