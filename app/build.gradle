@@ -63,13 +63,8 @@ dependencies {
     //Jitsi Meet
     implementation ('org.jitsi.react:jitsi-meet-sdk:2.8.2') { transitive = true }
 
-    //Multidex
-    //implementation "androidx.multidex:multidex:2.0.1"
-    //implementation 'com.android.support:multidex:1.0.3'
-
     //Firebase Authentication
     implementation 'com.firebaseui:firebase-ui-auth:7.2.0'
-    //implementation 'com.facebook.android:facebook-android-sdk:8.x'
 
     // Import the BoM for the Firebase platform
     implementation platform('com.google.firebase:firebase-bom:28.1.0')
