@@ -43,6 +43,7 @@ public class SignInActivity extends AppCompatActivity {
 
         preferenceManager = new PreferenceManager(getApplicationContext());
 
+        // If the user is already signed in, start the Main Activity
         if (preferenceManager.getBoolean(Constants.KEY_IS_SIGNED_IN)) {
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
@@ -66,6 +67,7 @@ public class SignInActivity extends AppCompatActivity {
 
         signInButton.setOnClickListener(v -> AuthenticationManager.signInG(this));
 
+        // Checking if all the details to sign in have been entered by the user
         buttonSignIn.setOnClickListener(v -> {
             if (inputEmail.getText().toString().trim().isEmpty()) {
                 Toast.makeText(SignInActivity.this, "Enter email", Toast.LENGTH_SHORT).show();
@@ -79,11 +81,13 @@ public class SignInActivity extends AppCompatActivity {
         });
     }
 
+    // Sign in with Teams email and password
     private void signIn() {
 
         buttonSignIn.setVisibility(View.INVISIBLE);
         signInProgressBar.setVisibility(View.VISIBLE);
 
+        // Getting the details of the signed in user from the Firestore and saving them in PreferenceManager
         FirebaseFirestore database = FirebaseFirestore.getInstance();
         database.collection(Constants.KEY_COLLECTION_USERS)
                 .whereEqualTo(Constants.KEY_EMAIL, inputEmail.getText().toString())
@@ -108,6 +112,7 @@ public class SignInActivity extends AppCompatActivity {
                 });
     }
 
+    // Google Sign-in
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -117,6 +122,7 @@ public class SignInActivity extends AppCompatActivity {
         }
     }
 
+    // Handles Google sign-in
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
                 GoogleSignInAccount account = completedTask.getResult(ApiException.class);

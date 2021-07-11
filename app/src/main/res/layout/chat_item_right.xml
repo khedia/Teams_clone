@@ -65,3 +65,4 @@
         android:layout_height="wrap_content"
         android:contentDescription="@string/app_name" />
 </RelativeLayout>
+<!--Layout of the right side chat-->

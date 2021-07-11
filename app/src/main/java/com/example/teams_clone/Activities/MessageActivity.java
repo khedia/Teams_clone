@@ -54,7 +54,6 @@ public class MessageActivity extends AppCompatActivity {
 
     ValueEventListener readMessageListener;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,6 +88,9 @@ public class MessageActivity extends AppCompatActivity {
         readMessages(fUser, userid);
     }
 
+    /* Get the current time when the send button is clicked
+    and send the details of the message to the database
+     */
     private void setClickOnSendButtonListener() {
         ImageButton btn_send = findViewById(R.id.btn_send);
 
@@ -109,6 +111,7 @@ public class MessageActivity extends AppCompatActivity {
 
     }
 
+    // If the user has seen the message update it in the database
     private void seenMessage(final String rId, DataSnapshot snapshot){
         Chat chat = snapshot.getValue(Chat.class);
         HashMap<String, Object> hashMap = new HashMap<>();
@@ -119,6 +122,7 @@ public class MessageActivity extends AppCompatActivity {
 
     }
 
+    // Send the message to the Firebase Realtime database
     private void sendMessage(String sender, String receiver, String message, String time) {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
@@ -132,6 +136,9 @@ public class MessageActivity extends AppCompatActivity {
         databaseReference.child("Chats").push().setValue(hashMap);
     }
 
+    /* Retrieve the current users' and selected users' messages
+     from the database and displaying in the message layout
+     */
     private void readMessages(String myId, String userId){
         mChat = new ArrayList<>();
 
@@ -142,13 +149,17 @@ public class MessageActivity extends AppCompatActivity {
                 mChat.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()){
                     Chat chat = snapshot.getValue(Chat.class);
-                    if (chat != null && (chat.getReceiver().equals(myId) && chat.getSender().equals(userId) ||
-                            chat.getReceiver().equals(userId) && chat.getSender().equals(myId))){
+                    if (chat != null && (chat.getReceiver().equals(myId)
+                            && chat.getSender().equals(userId) ||
+                            chat.getReceiver().equals(userId)
+                                    && chat.getSender().equals(myId))){
                         mChat.add(chat);
                     }
 
                     seenMessage(userId, snapshot);
-                    messageAdapter = new MessageAdapter(MessageActivity.this, mChat, preferenceManager);
+                    messageAdapter = new MessageAdapter(MessageActivity.this,
+                            mChat,
+                            preferenceManager);
                     recyclerView.setAdapter(messageAdapter);
                 }
             }
@@ -161,6 +172,7 @@ public class MessageActivity extends AppCompatActivity {
         reference.addValueEventListener(readMessageListener);
     }
 
+    // Remove the readMessageListener when the MessageActivity layout is removed
     @Override
     protected void onDestroy() {
         super.onDestroy();

@@ -1,3 +1,4 @@
+//This class manages google sign-in
 package com.example.teams_clone.managers;
 
 import android.content.Intent;

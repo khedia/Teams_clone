@@ -43,6 +43,7 @@ public class SignUpActivity extends AppCompatActivity {
         buttonSignUp = findViewById(R.id.buttonSignUp);
         signUpProgressBar = findViewById(R.id.signUpProgressBar);
 
+        // Checking if all the details to sign-up have been entered by the user
         buttonSignUp.setOnClickListener(v -> {
             if(inputFirstName.getText().toString().trim().isEmpty()) {
                 Toast.makeText(SignUpActivity.this, "Enter first name", Toast.LENGTH_SHORT).show();
@@ -64,11 +65,13 @@ public class SignUpActivity extends AppCompatActivity {
         });
     }
 
+    // Sign-up with Teams email and password
     private void signUp()
     {
         buttonSignUp.setVisibility(View.INVISIBLE);
         signUpProgressBar.setVisibility(View.VISIBLE);
 
+        // Sending the signing-up users details to Firestore database
         FirebaseFirestore database = FirebaseFirestore.getInstance();
         HashMap<String, Object> user = new HashMap<>();
         user.put(Constants.KEY_FIRST_NAME, inputFirstName.getText().toString());
@@ -76,6 +79,7 @@ public class SignUpActivity extends AppCompatActivity {
         user.put(Constants.KEY_EMAIL, inputEmail.getText().toString());
         user.put(Constants.KEY_PASSWORD, inputPassword.getText().toString());
 
+        // Saving the current signed in user details in the PreferenceManager
         database.collection(Constants.KEY_COLLECTION_USERS)
                 .add(user)
                 .addOnSuccessListener(documentReference -> {

@@ -1,3 +1,4 @@
+// Stores the data of the current signed in user
 package com.example.teams_clone.utilities;
 
 import android.content.Context;

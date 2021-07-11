@@ -1,3 +1,4 @@
+// Handles the MainActivity View displaying the list of users
 package com.example.teams_clone.adapters;
 
 import android.view.LayoutInflater;

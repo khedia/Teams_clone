@@ -1,3 +1,4 @@
+// This class is used to handle the details of the audio/video call
 package com.example.teams_clone.Firebase;
 
 import android.content.Intent;

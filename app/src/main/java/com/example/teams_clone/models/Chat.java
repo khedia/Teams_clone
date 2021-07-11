@@ -1,3 +1,4 @@
+// This model handles the data of each chat
 package com.example.teams_clone.models;
 
 public class Chat {

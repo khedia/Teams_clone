@@ -1,3 +1,4 @@
+// Seen/Delivered Constants are saved here
 package com.example.teams_clone.utilities;
 
 public class MessageStatusConstant {

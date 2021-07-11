@@ -129,3 +129,4 @@
         android:layout_marginLeft="@dimen/_8sdp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+<!--This is the container of each users data and contact options-->

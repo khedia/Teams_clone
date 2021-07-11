@@ -84,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements UsersListeners {
             }
         });
 
+        // Update the fcm token in their database when a user signs-in
         FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
             if(task.isSuccessful() && task.getResult() != null) {
                 sendFCMTokenToDatabase(task.getResult());
@@ -106,6 +107,7 @@ public class MainActivity extends AppCompatActivity implements UsersListeners {
         usersRecyclerView.setAdapter(usersAdapter);
     }
 
+    // Search users with their name or email
     private void searchUsers(String search_string) {
         List<Users> filteredUsers = new ArrayList<>();
         for (Users user : users) {
@@ -119,6 +121,7 @@ public class MainActivity extends AppCompatActivity implements UsersListeners {
         usersAdapter.notifyDataSetChanged();
     }
 
+    // Sending fcm token to database
     private void sendFCMTokenToDatabase(String token) {
         FirebaseFirestore database = FirebaseFirestore.getInstance();
         DocumentReference documentReference =
@@ -132,6 +135,7 @@ public class MainActivity extends AppCompatActivity implements UsersListeners {
         documentReference.update(Constants.KEY_USER_ID, preferenceManager.getString(Constants.KEY_USER_ID));
     }
 
+    // Get the details of all the users signed up in the app and update the main activity layout
     private void getUsers() {
         swipeRefreshLayout.setRefreshing(true);
         FirebaseFirestore database = FirebaseFirestore.getInstance();
@@ -169,6 +173,7 @@ public class MainActivity extends AppCompatActivity implements UsersListeners {
     }
 
     private void signOut() {
+        // sign out for user signed in with Google
         AuthenticationManager.singOutG(this);
         Toast.makeText(this, "Signing Out...", Toast.LENGTH_SHORT).show();
         FirebaseFirestore database = FirebaseFirestore.getInstance();
@@ -177,6 +182,7 @@ public class MainActivity extends AppCompatActivity implements UsersListeners {
                         preferenceManager.getString(Constants.KEY_USER_ID)
                 );
         HashMap<String, Object> updates = new HashMap<>();
+        // deleting the fcm-token from their database when a user signs out
         updates.put(Constants.KEY_FCM_TOKEN, FieldValue.delete());
         documentReference.update(updates)
                 .addOnSuccessListener(unused -> {
@@ -227,6 +233,7 @@ public class MainActivity extends AppCompatActivity implements UsersListeners {
         startActivity(intent);
     }
 
+    // Select multiple users for the call
     @Override
     public void onMultipleUsersAction(Boolean isMultipleUsersSelected) {
         if(isMultipleUsersSelected) {

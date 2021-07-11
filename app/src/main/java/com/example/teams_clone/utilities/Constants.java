@@ -1,3 +1,4 @@
+// All the constants used in the files are saved here
 package com.example.teams_clone.utilities;
 
 import java.util.HashMap;

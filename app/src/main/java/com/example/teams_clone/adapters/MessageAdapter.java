@@ -1,3 +1,4 @@
+// Handles the messageActivity View
 package com.example.teams_clone.adapters;
 
 import android.content.Context;

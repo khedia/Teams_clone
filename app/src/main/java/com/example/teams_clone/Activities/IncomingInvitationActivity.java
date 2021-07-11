@@ -1,3 +1,4 @@
+// This class handles the incoming call
 package com.example.teams_clone.Activities;
 
 import android.content.BroadcastReceiver;
@@ -41,6 +42,7 @@ public class IncomingInvitationActivity extends AppCompatActivity {
         ImageView imageMeetingType = findViewById(R.id.imageMeetingType);
         meetingType = getIntent().getStringExtra(Constants.REMOTE_MSG_MEETING_TYPE);
 
+        // Set the image of the type of the incoming call
         if(meetingType != null) {
             if(meetingType.equals("video")) {
                 imageMeetingType.setImageResource(R.drawable.ic_video);
@@ -53,6 +55,7 @@ public class IncomingInvitationActivity extends AppCompatActivity {
         TextView textUsername = findViewById(R.id.textUserName);
         TextView textEmail = findViewById(R.id.textEmail);
 
+        // Set the details of the user who is calling
         String firstName = getIntent().getStringExtra(Constants.KEY_FIRST_NAME);
         if(firstName != null) {
             textFirstChar.setText(firstName.substring(0, 1));
@@ -79,6 +82,7 @@ public class IncomingInvitationActivity extends AppCompatActivity {
         ));
     }
 
+    // Sending the response of the incoming call to the user who is calling
     private void sendInvitationResponse(String type, String receiverToken)
     {
         try {
@@ -101,6 +105,9 @@ public class IncomingInvitationActivity extends AppCompatActivity {
         }
     }
 
+    /* Setting the call with the help of jitsi if accepted
+    otherwise setting the message to be sent to the user who is calling
+     */
     private void sendRemoteMessage(String remoteMessageBody, String type) {
         ApiClient.getClient().create(ApiService.class).sendRemoteMessage(
                 Constants.getRemoteMessageHeaders(), remoteMessageBody
@@ -145,6 +152,7 @@ public class IncomingInvitationActivity extends AppCompatActivity {
         });
     }
 
+    // If the Invitation is cancelled
     private BroadcastReceiver invitationResponseReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {

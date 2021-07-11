@@ -1,3 +1,4 @@
+// This class handles the outgoing call
 package com.example.teams_clone.Activities;
 
 import android.content.BroadcastReceiver;
@@ -62,6 +63,7 @@ public class OutgoingInvitationActivity extends AppCompatActivity {
         ImageView imageMeetingType = findViewById(R.id.imageMeetingType);
         meetingType = getIntent().getStringExtra("type");
 
+        // Setting the details of the call and the receiver, in the layout
         if(meetingType != null) {
             if(meetingType.equals("video")) {
                 imageMeetingType.setImageResource(R.drawable.ic_video);
@@ -222,6 +224,9 @@ public class OutgoingInvitationActivity extends AppCompatActivity {
         }
     }
 
+    /* Start the call with jitsi meet if invitation is accepted on the other side
+    otherwise displaying a toast the the response received
+     */
     private BroadcastReceiver invitationResponseReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
