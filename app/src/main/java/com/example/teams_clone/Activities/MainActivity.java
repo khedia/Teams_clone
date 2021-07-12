@@ -165,9 +165,10 @@ public class MainActivity extends AppCompatActivity implements UsersListeners {
     }
 
     private void signOut() {
-        // sign out for user signed in with Google
+        // Sign out for user signed in with Google
         AuthenticationManager.singOutG(this);
         Toast.makeText(this, "Signing Out...", Toast.LENGTH_SHORT).show();
+        // Sign out for users signed in with email and password
         FirebaseFirestore database = FirebaseFirestore.getInstance();
         DocumentReference documentReference =
                 database.collection(Constants.KEY_COLLECTION_USERS).document(
