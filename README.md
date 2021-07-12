@@ -4,6 +4,8 @@ Project for Microsoft Engage Mentorship Program
 Link for the app apk - https://drive.google.com/file/d/1Q6BHu2ijHWVm9R-l3QLhnHG_NBrPgm-B/view?usp=sharing
 Link for documentation - https://drive.google.com/file/d/1E3FKSqqy6I6JCVGuehVDstky7VAHDtFC/view?usp=sharing
 
+[Teams_documentation.pdf](https://github.com/khedia/Teams_clone/files/6803525/Teams_documentation.pdf)
+
 You can sign-up for an account in this app with some basic details and create your email and password.
 If you already have an account in the app you can sign-in with the email and password.
 There is also a Google sign-in option provided to sign-in with your google account.
@@ -29,4 +31,3 @@ Implementation Guide
 -> When you change database settings, you likely will need to uninstall and reinstall apps to avoid app crashes due to app caches.
 
 ![ezgif com-resize](https://user-images.githubusercontent.com/68772130/125284688-66a92680-e337-11eb-93bb-4847ac8b0546.gif)
-[Teams_documentation.pdf](https://github.com/khedia/Teams_clone/files/6803525/Teams_documentation.pdf)
