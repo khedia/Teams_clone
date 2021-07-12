@@ -36,10 +36,10 @@ I have used Firebase to handle the authentication, database and also the cloud m
 To clone and run this application: I have deleted my google-services.json file. You can add yours.
 Change Authorisation-key with your key from firebase project.
 
-Implementation Guide 
-1 - Project 
-- Open the Project in your android studio; 
-2 - IMPORTANT: Change the Package Name. (https://stackoverflow.com/questions/16804093/android-studio-rename-package)
+Implementation Guide <br/>
+1 - Project <br/>
+- Open the Project in your android studio<br/> 
+2 - IMPORTANT: Change the Package Name. (https://stackoverflow.com/questions/16804093/android-studio-rename-package)<br/>
 - Firebase Panel 
 - Create Firebase Project (https://console.firebase.google.com/); 
 - Get the SHA keys from the android studio and paste in the firebase project
