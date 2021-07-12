@@ -24,3 +24,5 @@ Implementation Guide
 -> In firebase Storage Rules, change value of "allow read, write:" from "if request.auth != null" to "if true;" 
 -> Also change the key in the Constants file with your firebase project's Cloud Messaging Server Key
 -> When you change database settings, you likely will need to uninstall and reinstall apps to avoid app crashes due to app caches.
+
+![ezgif-6-72cdc3eed30b](https://user-images.githubusercontent.com/68772130/125284028-99065400-e336-11eb-8029-a3d3514d8870.gif)
