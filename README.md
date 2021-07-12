@@ -25,4 +25,4 @@ Implementation Guide
 -> Also change the key in the Constants file with your firebase project's Cloud Messaging Server Key
 -> When you change database settings, you likely will need to uninstall and reinstall apps to avoid app crashes due to app caches.
 
-![ezgif-6-72cdc3eed30b](https://user-images.githubusercontent.com/68772130/125284028-99065400-e336-11eb-8029-a3d3514d8870.gif)
+![ezgif com-resize](https://user-images.githubusercontent.com/68772130/125284688-66a92680-e337-11eb-93bb-4847ac8b0546.gif)
