@@ -59,7 +59,7 @@ Implementation Guide:
 
 ## [Documentation](https://drive.google.com/file/d/1QKHwmypIhxxJU-bZYOUarN3yuDQq61Is/view?usp=sharing) 
 
-## [Video](https://drive.google.com/file/d/1bhgbx-4QEPZyDLGpPCPUYUrsP5sIx2V1/view?usp=sharing)
+## [Video](https://youtu.be/Wvr_qD_pokE)
 
 <div align="center">
 
