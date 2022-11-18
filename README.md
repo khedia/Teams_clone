@@ -17,7 +17,7 @@ Teams <svg xmlns="http://www.w3.org/2000/svg" width="30" height="28" viewBox="0 
 
 ## Introduction
 
-Teams application is compatible on all android apps with minimum SDK version 23. This app is basically used to connect with people with video, audio and Text chat.
+Teams application is compatible on all android mobile with minimum SDK version 23. This app is basically used to connect with people with video, audio and Text chat.
 I have used Firebase to handle the authentication, database and also the cloud messaging which is used to connect with the other users. It uses jitsi-meet sdk to handle the voice calling and video calling feature.
 <br/>
 
